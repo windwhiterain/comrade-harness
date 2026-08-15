@@ -1,0 +1,6 @@
+[submodule "cores/standard"]
+	path = cores/standard
+	url = https://github.com/windwhiterain/comrade-harness-standard.git
+[submodule "cores/dsh-minimal"]
+	path = cores/dsh-minimal
+	url = https://github.com/windwhiterain/comrade-harness-dsh-minimal.git
