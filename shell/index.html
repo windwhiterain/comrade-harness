@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>comrade-harness · 驾驶舱</title>
+<link rel="stylesheet" href="/app.css">
+</head>
+<body>
+<header class="topbar">
+  <h1>comrade-harness</h1>
+  <div class="conn"><span id="connDot" class="dot gray"></span><span id="connText">连接中…</span></div>
+  <button id="reloadUiBtn">重载</button>
+</header>
+<main class="layout" id="layout">
+  <aside class="pane left" id="sidePane">
+    <div class="bar">cores</div>
+    <h2 class="row" id="collapseHead" title="点击收起 cores 侧栏">cores
+      <span class="spacer"></span>
+      <button id="importCoreBtn" class="mini" title="从文件路径导入一个 core（目录需包含 src/index.ts）">导入</button>
+    </h2>
+    <ul id="coreList"></ul>
+    <h2><button id="commitBtn" class="mini" title="给选中 core 打 commit（git 提交，可回滚）">commit</button></h2>
+    <ul id="commitList"><li class="muted">点一个 core 查看提交记录</li></ul>
+  </aside>
+  <div class="resizer" id="resizer" title="拖动调整侧栏宽度"></div>
+  <section class="stage">
+    <iframe id="frame" title="core 页面"></iframe>
+  </section>
+</main>
+<script type="module" src="/app.js"></script>
+</body>
+</html>

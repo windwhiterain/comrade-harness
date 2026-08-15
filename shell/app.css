@@ -1,0 +1,116 @@
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font: 13px/1.5 "Cascadia Mono", Consolas, "Courier New", monospace;
+  background: #1e1a14;
+  color: #d4c8ae;
+}
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 14px;
+  border-bottom: 1px solid #342e22;
+  background: #262117;
+}
+.topbar h1 { font-size: 14px; margin: 0; color: #c9a55a; letter-spacing: .04em; }
+.dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+.dot.gray { background: #6d6350; }
+.dot.green { background: #6a8a4a; }
+.dot.amber { background: #b89440; }
+.dot.red { background: #8a3c28; }
+.dot.blue { background: #5a7a9a; }
+.layout { display: grid; grid-template-columns: var(--pane-w, 260px) 6px 1fr; height: calc(100vh - 37px); }
+.pane { padding: 10px; overflow-y: auto; min-width: 0; }
+/* 折叠成窄 bar：整条可点，点击展开 */
+.pane .bar { display: none; }
+.layout.collapsed { grid-template-columns: 34px 1fr; }
+.layout.collapsed .pane { padding: 0; overflow: hidden; border-right: 1px solid #342e22; cursor: pointer; }
+.layout.collapsed .pane > *:not(.bar) { display: none; }
+.layout.collapsed .pane .bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  writing-mode: vertical-rl;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  font-size: 11px;
+  color: #6d6350;
+}
+.layout.collapsed .pane .bar:hover { color: #d4c8ae; }
+.layout.collapsed .resizer { display: none; }
+/* 拖拽调宽把手 */
+.resizer { cursor: col-resize; border-left: 1px solid #342e22; }
+.resizer:hover, body.resizing .resizer { background: #342e22; }
+body.resizing { cursor: col-resize; user-select: none; }
+body.resizing iframe { pointer-events: none; }
+/* 标题行：名称靠左（可点击折叠侧栏），按钮靠右 */
+h2.row { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+h2.row:hover { color: #d4c8ae; }
+h2.row .spacer { flex: 1; }
+h2 { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: #6d6350; margin: 12px 0 6px; }
+/* 侧栏第一个标题（cores）贴顶：只留 pane 的 padding，不叠 h2 的顶部 margin */
+.pane > h2:first-of-type { margin-top: 0; }
+ul { list-style: none; margin: 0; padding: 0; }
+li.core {
+  padding: 8px;
+  border: 1px solid #342e22;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  background: #262117;
+}
+li.core:hover { border-color: #443c2e; }
+/* 选中 = 背景变色（与会话侧边栏 .side-item.active 同款），不用边框 */
+li.core.selected { background: #b8684020; }
+li.core .name { font-weight: bold; }
+/* 模板 core（standard/dsh-minimal，项目内置）：📦 标识，视觉区分但行为与普通 core 完全平等（可改/可删） */
+li.core.tpl { border-style: dashed; }
+li.core.tpl .name { opacity: .85; }
+button {
+  background: #262117;
+  color: #d4c8ae;
+  border: 1px solid #342e22;
+  border-radius: 6px;
+  padding: 4px 8px;
+  font: inherit;
+  cursor: pointer;
+}
+button:hover { background: #302a1f; }
+button:disabled { opacity: .4; cursor: default; }
+button.mini { padding: 2px 6px; font-size: 11px; }
+button.danger { color: #c06040; border-color: #8a3c2855; }
+button.danger:hover { background: #8a3c2818; }
+/* 重载按钮：金色描边，位置在连接状态后面；禁用（未上线）时降为灰金但保持可见 */
+.topbar #reloadUiBtn { background: transparent; border-color: #c9a55a; color: #c9a55a; }
+.topbar #reloadUiBtn:hover:not(:disabled) { background: #c9a55a1a; }
+.topbar #reloadUiBtn:disabled { border-color: #6d6350; color: #6d6350; opacity: .55; }
+.stage { display: flex; flex-direction: column; min-width: 0; }
+#frame { flex: 1; width: 100%; border: none; background: #fff; }
+.muted { color: #6d6350; }
+/* 右键菜单：卡片只显示名字，重载/fork/删除收进这里 */
+.ctxmenu {
+  position: fixed;
+  z-index: 100;
+  min-width: 150px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 4px;
+  background: #262117;
+  border: 1px solid #443c2e;
+  border-radius: 6px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, .45);
+}
+.ctxmenu .ctxhead { font-size: 11px; color: #6d6350; padding: 4px 8px; border-bottom: 1px solid #342e22; margin-bottom: 4px; }
+.ctxmenu button { text-align: left; background: transparent; border: none; padding: 6px 10px; border-radius: 4px; }
+.ctxmenu button:hover { background: #302a1f; }
+.ctxmenu button.danger { color: #c06040; }
+li.commit { padding: 6px 8px; border-bottom: 1px solid #342e22; cursor: pointer; font-size: 12px; }
+li.commit:hover { background: #262117; }
+li.commit .msg { color: #d4c8ae; }
+li.commit .sha { color: #c9a55a; }
+li.commit .ts { color: #6d6350; font-size: 10px; }

@@ -1,0 +1,20 @@
+{
+  "name": "comrade-harness",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "bin": {
+    "crh": "./cli/crh.ts"
+  },
+  "scripts": {
+    "crh": "bun cli/crh.ts",
+    "dev": "bun run crh web",
+    "build:shell": "bun build shell/src/app.ts --outdir shell/dist",
+    "typecheck": "bunx tsc --noEmit -p tsconfig.json && bunx tsc --noEmit -p shell/tsconfig.json",
+    "publish": "bun scripts/publish.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5.6.0"
+  }
+}
